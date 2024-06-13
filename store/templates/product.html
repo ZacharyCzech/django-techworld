@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/product_page.css' %}">
+
+<div class="content">
+    <div class="product-content">
+        <div class="product-image">
+            <img src="{{ product.image.url }}" class="product-image-content">
+        </div>
+        <div class="product-info">
+            <div class="product-text"> {{ product.name }} </div>
+            <div class="product-price">
+                <h1> {{ product.price|floatformat:2|intcomma }} zł</h1>
+
+                <div class="cart">
+                    <button type="button" value="{{ product.id }}" class="product-cart-button" id="add-cart">
+                        <img class="product-cart-image" src="{% static 'assets/icons/cart-add-1.svg' %}" width="30px" height="30px">
+                    </button>
+                </div>
+
+                <div class="count-select-box">
+                    <label for="qty-cart">Ilość:</label>
+                    <select id="qty-cart" class="count-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+
+        $(document).on('click', '#add-cart', function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cart_add' %}',
+                data: {
+                    product_id: $('#add-cart').val(),
+                    product_qty: $('#qty-cart option:selected').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+
+                success: function(json){
+                   document.getElementById("cart_quantity").textContent = json.qty
+                },
+
+                error: function(xhr, errmsg, err){
+
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+
+<div class="content">
+    <div class="cart-page">
+        <div class="products">
+            {% if cart_products %}
+
+            {% for product in cart_products %}
+                <div class="product">
+                    <div class="product-content">
+                        <div class="product-image">
+                        <img src="{{ product.image.url }}" class="product-image-content">
+                        </div>
+                        <div class="product-header"> {{ product.name }} </div>
+                        <div class="product-info">
+                            <div class="product-price">
+                                {{ product.price|floatformat:2|intcomma }} zł
+                            </div>
+
+                            <div class="count-select-box">
+                                <label for="qty-cart"></label>
+                                <select class="count-select" id="select{{ product.id }}">
+                                    {% for key, value in quantities.items %}
+                                        {% if key == product.id|slugify %}
+                                            <option selected>{{ value }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="product-update-button update-cart" data-index="{{ product.id }}">
+                            <img class="product-update-image" src="{% static 'assets/icons/close.svg' %}" width="30px" height="30px">
+                        </button>
+
+                        <button type="button" class="product-delete-button delete-product" data-index="{{ product.id }}">
+                            <img class="product-delete-image" src="{% static 'assets/icons/refresh.svg' %}" width="30px" height="30px">
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% else %}
+                <div class="no-products"><p>Twój koszyk jest pusty!</p></div>
+            {% endif %}
+        </div>
+        <div class="checkout">
+            <div class="checkout-content">
+                <div class="total">
+                    {% if cart_products %}
+                        Razem: <div class="total-price">{{ totals|intcomma }} zł</div>
+                    {% else %}
+                        Razem: <div class="total-price">0.00 zł</div>
+                    {% endif %}
+                </div>
+
+                <div class="order-button-box">
+                    {% if cart_products %}
+                        <a class="order-button" href="{% url 'checkout' %}"> Złóż zamówienie </a>
+                    {% else %}
+                        <a class="order-button" href="{% url 'shop' %}"> Wróć do sklepu </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <script>
+
+        $(document).on('click', '.update-cart', function(e){
+            e.preventDefault();
+
+            const productid = $(this).data('index');
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cart_update' %}',
+                data: {
+                    product_id: $(this).data('index'),
+                    product_qty: $('#select' + productid + ' option:selected').text(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+
+                success: function(json){
+                   location.reload();
+                },
+
+                error: function(xhr, errmsg, err){
+
+                }
+            });
+        });
+
+        $(document).on('click', '.delete-product', function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cart_delete' %}',
+                data: {
+                    product_id: $(this).data('index'),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+
+                success: function(json){
+                   location.reload();
+                },
+
+                error: function(xhr, errmsg, err){
+
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}
+
+

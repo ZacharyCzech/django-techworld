@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+
+<div class="content">
+    <div class="product-page">
+        <div class="filter-bar">
+            <div class="filter-bar-content">
+                <form class="clear-filters-form" action="" method="get">
+                    <input type="hidden" name="query" value="{{ query }}">
+                    <input type="hidden" name="category" value="">
+                    <input type="hidden" name="subcategory" value="">
+                    <input type="hidden" name="min_price" value="{{ min_price }}">
+                    <input type="hidden" name="max_price" value="{{ max_price }}">
+                    <button type="submit" class="clear-filters-button">Wyczyść kategorie</button>
+                </form>
+
+                <form class="clear-filters-form" action="" method="get">
+                    <input type="hidden" name="query" value="">
+                    <input type="hidden" name="category" value="{{ category_id }}">
+                    <input type="hidden" name="subcategory" value="{{ subcategory_id }}">
+                    <input type="hidden" name="min_price" value="{{ min_price }}">
+                    <input type="hidden" name="max_price" value="{{ max_price }}">
+                    <button type="submit" class="clear-filters-button">Wyczyść wyszukiwanie</button>
+                </form>
+
+                <form class="price-filter-form" action="" method="get">
+                    <input type="hidden" name="query" value="{{ query }}">
+                    <input type="hidden" name="category" value="{{ category_id }}">
+                    <input type="hidden" name="subcategory" value="{{ subcategory_id }}">
+                    <input type="number" id="min-price" class="price-filter-element" name="min_price" value="{{ min_price }}" placeholder="od">
+                    <input type="number" id="max-price" class="price-filter-element" name="max_price" value="{{ max_price }}" placeholder="do">
+                    <button type="submit" class="price-filter-button">Filtruj</button>
+                </form>
+
+                <form class="clear-filters-form" action="" method="get">
+                    <input type="hidden" name="query" value="">
+                    <input type="hidden" name="category" value="">
+                    <input type="hidden" name="subcategory" value="">
+                    <input type="hidden" name="min_price" value="">
+                    <input type="hidden" name="max_price" value="">
+                    <button type="submit" class="clear-filters-button">Wyczyść filtry</button>
+                </form>
+            </div>
+        </div>
+        <div class="product-section">
+
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&query={{ query }}&category={{ category_id }}&subcategory={{ subcategory_id }}&min_price={{ min_price }}&max_price={{ max_price }}">
+                        <div class="page-button-active"> < Poprzednia </div>
+                    </a>
+                {% else %}
+                    <div class="page-button-inactive"> < </div>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <div class="page-button-current">{{ i }}</div>
+                    {% else %}
+                        <a href="?page={{ i }}&query={{ query }}&category={{ category_id }}&subcategory={{ subcategory_id }}&min_price={{ min_price }}&max_price={{ max_price }}">
+                            <div class="page-button">{{ i }}</div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&query={{ query }}&category={{ category_id }}&subcategory={{ subcategory_id }}&min_price={{ min_price }}&max_price={{ max_price }}">
+                        <div class="page-button-active"> Następna > </div>
+                    </a>
+                {% else %}
+                    <div class="page-button-inactive"> > </div>
+                {% endif %}
+            </div>
+
+            <div class="products">
+                {% if products %}
+                {% for product in products %}
+                    <a href="{% url 'product' product.id %}">
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="{{ product.image.url }}" class="product-image-content">
+                            </div>
+                            <div class="product-header"> {{ product.name }} </div>
+                            <div class="product-bottom">
+                                <div class="product-price"> {{ product.price|floatformat:2|intcomma }} zł </div>
+                                <div class="product-cart">
+                                    <button type="button" value="{{ product.id }}" class="product-cart-button add-cart" data-index="{{ product.id }}">
+                                        <img class="product-cart-image" src="{% static 'assets/icons/cart-add-1.svg' %}" width="30px" height="30px">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+                {% else %}
+
+                    <div class="no-products"><p>Brak dostępnych produktów.</p></div>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+
+        $(document).on('click', '.add-cart', function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cart_add' %}',
+                data: {
+                    product_id: $(this).data('index'),
+                    product_qty: 1,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+
+                success: function(json){
+                    location.reload();
+                },
+
+                error: function(xhr, errmsg, err){
+
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

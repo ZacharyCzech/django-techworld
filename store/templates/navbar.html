@@ -1,0 +1,94 @@
+{% load static %}
+
+<div class="header">
+    <div class="top-nav">
+        <div class="top-nav-elements">
+            <div class="menu-button"> <img class="menu" alt="menu"> </div>
+
+            <div class="logo-box">
+                <a href="{% url 'index' %}"> <img class="logo" alt="techworld"> </a>
+            </div>
+
+            <div class="search-box">
+                <form class="search-box-content" action="{% url 'shop' %}" method="get">
+                    <button type="submit" class="search-button">
+                        <img src="{% static 'assets/icons/search.svg' %}" alt="Szukaj" class="search-icon">
+                    </button>
+                    <input class="search-input" type="search" name="query" value="{{ query }}" placeholder="Szukaj...">
+                    {% if category_id %}
+                        <input type="hidden" name="category" value="{{ category_id }}">
+                    {% endif %}
+                    {% if subcategory_id %}
+                        <input type="hidden" name="subcategory" value="{{ subcategory_id }}">
+                    {% endif %}
+                    {% if min_price %}
+                        <input type="hidden" name="min_price" value="{{ min_price }}">
+                    {% endif %}
+                    {% if max_price %}
+                        <input type="hidden" name="max_price" value="{{ max_price }}">
+                    {% endif %}
+                </form>
+            </div>
+
+            <div class="icon-box">
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li> <a href="{% url 'logout' %}"> <img class="icon" src="{% static 'assets/icons/profile.svg' %}" alt="Wyloguj się"> <span> Wyloguj się </span> </a> </li>
+                    {% else %}
+                        <li> <a href="{% url 'login' %}"> <img class="icon" src="{% static 'assets/icons/login.svg' %}" alt="Zaloguj się"> <span> Zaloguj się </span> </a> </li>
+                    {% endif %}
+
+                    {% if user.is_superuser  %}
+                        <li> <a href="{% url 'admin:index' %}"> <img class="icon" src="{% static 'assets/icons/admin.svg' %}" alt="Panel admina"> <span> Panel admina </span> </a> </li>
+                    {% elif user.is_staff %}
+                        <li> <a href="{% url 'admin:index' %}"> <img class="icon" src="{% static 'assets/icons/add.svg' %}" alt="Edytuj produkty"> <span> Dodaj produkt </span> </a> </li>
+                    {% else %}
+                        <li> <a href="#"> <img class="icon" src="{% static 'assets/icons/contact.svg' %}" alt="Kontakt"> <span> Kontakt </span> </a> </li>
+                    {% endif %}
+
+                    <li> <a href="{% url 'cart_summary' %}">
+                        <div class="cart-icon-container">
+                            <img class="icon" src="{% static 'assets/icons/cart.svg' %}" alt="Koszyk">
+                            <span class="cart-count" id="cart_quantity"> {{ cart|length }} </span>
+                        </div>
+                        <div class="cart-text"> <span> Koszyk </span> </div>
+                    </a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <div class="bottom-nav">
+        <div class="bottom-nav-elements">
+            {% for group_name, group_data in categorized_groups.items %}
+            <div class="dropdown" data-dropdown-menu>
+                <button class="category-link" data-dropdown-button>
+                    <img class="category-icon" src="{% static group_data.icon %}" alt="{{ group_name }}" data-dropdown-button>
+                    {{ group_name }}
+                    <img class="switch-icon" alt="Rozwiń" data-dropdown-button>
+                </button>
+                <div class="dropdown-menu">
+                    {% for category in group_data.categories %}
+                    <div class="dropdown-category">
+                        <div class="dropdown-header">
+                            <a href="{% url 'shop' %}?category={{ category.id }}&query={{ query }}&min_price={{ min_price }}&max_price={{ max_price }}" class="dropdown-header-link">{{ category.name }}</a>
+                        </div>
+                        <div class="dropdown-links">
+                            <ul>
+                                {% for subcategory in subcategories %}
+                                    {% if subcategory.category == category %}
+                                    <li><a href="{% url 'shop' %}?category={{ category.id }}&subcategory={{ subcategory.id }}&query={{ query }}&min_price={{ min_price }}&max_price={{ max_price }}" class="dropdown-link">{{ subcategory.name }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

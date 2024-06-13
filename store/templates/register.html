@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatibile" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/favicon.svg' %}">
+    <title>TechWorld</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <script src="{% static 'js/login.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+</head>
+
+<body>
+
+<div class="all">
+    <div class="login">
+        <div class="title">
+            <img src="{% static 'assets/logo.svg' %}" class="title-content" alt="TechLord">
+        </div>
+        <form class="form" method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-element {% if form.errors.email %}error{% endif %}">
+                <span class="validation">
+                    {% for error in form.errors.email %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                {{ form.email }}
+                <label for="email" class="form-label">e-mail</label>
+            </div>
+            <div class="form-element form-password {% if form.errors.password %}error{% endif %}">
+                <span class="validation">
+                    {% for error in form.errors.password %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                <div class="password-elements {% if form.errors.password %}error{% endif %}">
+                    {{ form.password }}
+                    <button class="toggle-password" type="button">pokaż</button>
+                </div>
+                <label for="password" class="form-label">hasło</label>
+            </div>
+            <div class="form-element {% if form.errors.repeat_password %}error{% endif %}">
+                <span class="validation">
+                    {% for error in form.errors.repeat_password %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                {{ form.repeat_password }}
+                <label for="repeat_password" class="form-label">powtórz hasło</label>
+            </div>
+            <div class="verification-form {% if form.errors.checkbox %}error{% endif %}">
+                <div class="checkbox-label">
+                    {{ form.checkbox }}
+                    <label for="checkbox">Akceptuję <a href="#">regulamin</a> sklepu </label>
+                </div>
+                <span class="validation">
+                    {% for error in form.errors.checkbox %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                <div class="checkbox-label">
+                    <input type="checkbox" name="notif" id="notif">
+                    <label for="notif">Chcę otrzymywać informacje o ofertach sklepu </label>
+                </div>
+            </div>
+            <div class="captcha {% if form.errors.captcha %}error{% endif %}">
+                <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_PUBLIC_KEY }}"></div>
+                <span class="validation">
+                    {% for error in form.errors.captcha %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+            </div>
+            <button class="login-button">Utwórz konto</button>
+            <div class="bottom-message">
+                <span> Masz już konto? <a href="{% url 'login' %}">Zaloguj się</a> </span>
+                <span> <a href="{% url 'index' %}">Strona główna</a> </span>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

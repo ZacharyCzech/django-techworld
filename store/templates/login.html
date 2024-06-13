@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatibile" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/favicon.svg' %}">
+    <title>TechWorld</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <script src="{% static 'js/login.js' %}"></script>
+
+</head>
+<body>
+
+<div class="all">
+    <div class="login">
+        <div class="title">
+            <img src="{% static 'assets/logo.svg' %}" class="title-content" alt="TechLord">
+        </div>
+        {% if request.GET.register == "success" %}
+            <div class="register-success">
+                <span>Udało ci się utworzyć konto!</span>
+            </div>
+        {% endif %}
+        <form class="form" method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-element {% if form.errors.email %}error{% endif %}">
+                <span class="validation">
+                    {% for error in form.errors.email %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                {{ form.email }}
+                <label for="email" class="form-label">e-mail</label>
+            </div>
+            <div class="form-element form-password {% if form.errors.password %}error{% endif %}">
+                <span class="validation">
+                    {% for error in form.errors.password %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                <div class="password-elements {% if form.errors.password %}error{% endif %}">
+                    {{ form.password }}
+                    <button class="toggle-password" type="button">pokaż</button>
+                </div>
+                <label for="password" class="form-label">hasło</label>
+            </div>
+            <div class="middle-form">
+                <div class="checkbox-label">
+                    <input type="checkbox" name="checkbox" id="checkbox">
+                    <label for="checkbox">Zapamiętaj mnie</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Nie pamiętam hasła</a>
+                </div>
+            </div>
+            <button type="submit" class="login-button">Zaloguj się</button>
+            <div class="bottom-message">
+                <span> Nie masz konta? <a href="{% url 'register' %}">Zarejestruj się</a> </span>
+                <span> <a href="{% url 'index' %}">Strona główna</a> </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

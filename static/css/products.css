@@ -1,0 +1,279 @@
+a
+{
+  text-decoration: none;
+  color: black;
+}
+
+.content
+{
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.product-page
+{
+  margin-top: 120px;
+  width: 1500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-bar
+{
+  max-width: 250px;
+  border-radius: 40px;
+  border: #eeeeee solid 2px;
+  min-height: 800px;
+  background-color: #fafafa;
+}
+
+.filter-bar-content
+{
+  padding: 24px;
+}
+
+.clear-filters-button {
+  background-color: #dddddd;
+  border: 2px solid #cccccc;
+  margin: 4px 0;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.price-filter-form
+{
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.price-filter-element
+{
+  height: 30px;
+  width: 32%;
+  padding: 6px;
+  border: 2px solid #dddddd;
+  background: #eeeeee;
+  border-radius: 12px;
+}
+
+.price-filter-button
+{
+  width: 32%;
+  background-color: #dddddd;
+  border: 2px solid #cccccc;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+
+
+
+
+.product-section
+{
+  width: 100%;
+}
+
+.products
+{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 0;
+}
+
+.product
+{
+  max-width: 250px;
+  min-width: 200px;
+  border-bottom: 1px #dddddd solid;
+  border-radius: 12px;
+  height: 370px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px;
+  transition: box-shadow 240ms ease-in-out;
+}
+
+.product:hover
+{
+  border-radius: 12px;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.product-image
+{
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image-content
+{
+  width: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.product-header
+{
+  max-width: 100%;
+  font-size: 20px;
+  padding: 0 12px;
+}
+
+.product-bottom
+{
+  width: 100%;
+  margin: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 0 12px;
+}
+
+.product-cart-button
+{
+  border: 3px solid #000;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 6px 5px 4px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 100ms ease-in-out, background-color 100ms ease-in-out
+}
+
+.product-price
+{
+  font-weight: 600;
+}
+
+.product-cart-button:hover
+{
+  border: 3px solid #1f93e0;
+  background-color: #1f93e0;
+}
+
+.product-cart-image
+{
+  content: url("../assets/icons/cart-add-1.svg");
+}
+
+.product-cart-button:hover .product-cart-image
+{
+  content: url("../assets/icons/cart-add-2.svg");
+}
+
+.no-products
+{
+  margin-top: 24px;
+  font-size: 18px;
+}
+
+
+.pagination
+{
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 12px;
+  margin: 0 12px;
+  border-bottom: 1px solid #dadada;
+  border-radius: 12px;
+}
+
+.page-button
+{
+  background-color: #fafafa;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid #eeeeee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 4px 0 4px;
+  font-size: 16px;
+}
+
+.page-button-current
+{
+  background-color: #eaeaea;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 4px 0 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.page-button-active
+{
+  background-color: #fafafa;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid #eeeeee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 4px 0 4px;
+  font-size: 16px;
+  padding: 0 6px;
+}
+
+.page-button-inactive
+{
+  background-color: #eaeaea;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 4px 0 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+
+
+
+@media (max-width: 960px)
+{
+  .product-page
+  {
+    display: initial;
+  }
+
+  .filter-bar
+  {
+    max-width: 100%;
+    width: 100%;
+    min-height: 150px;
+    margin-bottom: 12px;
+  }
+}

@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+*
+{
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.all
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.login
+{
+  border-radius: 24px;
+  border: #eeeeee solid 2px;
+  width: 75%;
+  max-width: 720px;
+  padding: 24px 0;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.title
+{
+  text-align: center;
+}
+
+.title-content
+{
+  max-width: 80%;
+  min-width: 240px;
+  padding: 24px 0;
+}
+
+.register-success
+{
+  font-weight: 600;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.form
+{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 10%;
+  padding: 24px 0;
+}
+
+.form-element
+{
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 3px;
+  width: 100%;
+}
+
+.form-element label
+{
+  color: #aaaaaa;
+  transition: color 150ms ease-in-out;
+}
+
+.form-element.error label
+{
+  color: #d74352;
+}
+
+.form-element input
+{
+  position: relative;
+  padding: 12px 60px 12px 12px;
+  outline: none;
+  border-radius: 12px;
+  border: 2px #aaaaaa solid;
+  transition: border-color 150ms ease-in-out;
+}
+
+.form-element input:focus
+{
+  border-color: #555555;
+}
+
+.form-element input:focus + label {
+  color: #555555;
+}
+
+.form-element.form-password.error input
+{
+  border: none;
+}
+
+.form-element.error input
+{
+  border: 2px #d74352 solid;
+}
+
+.form-element.error input:focus + label {
+  color: #d74352;
+}
+
+.form-element.error button
+{
+  color: #d74352;
+}
+
+.validation
+{
+  display: none;
+  color: #d74352;
+  font-size: 12px;
+}
+
+.form-element.error .validation
+{
+  display: block;
+}
+
+.password-elements
+{
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: #aaaaaa 2px solid;
+  border-radius: 12px;
+  transition: border-color 150ms ease-in-out;
+}
+
+.password-elements input
+{
+  border: none;
+  padding-right: 0;
+  width: 100%;
+}
+
+.password-elements.error
+{
+  border-color: #d74352;
+}
+
+.toggle-password
+{
+  position: relative;
+  cursor: pointer;
+  color: #aaaaaa;
+  padding: 0 12px;
+  border: none;
+  background: none;
+  transition: color 150ms ease-in-out;
+}
+
+.middle-form
+{
+  display: flex;
+  justify-content: space-between;
+  color: #aaaaaa;
+}
+
+.verification-form
+{
+  color: #aaaaaa;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verification-form.error .validation
+{
+  display: block !important;
+}
+
+:is(a:visited, a:active, a:link)
+{
+  color: #23a6ff;
+  text-decoration: none;
+}
+
+a:hover
+{
+  border-bottom: 2px #23a6ff solid;
+}
+
+input[type="checkbox"] {
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.checkbox-label
+{
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.captcha
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: -12px;
+}
+
+.captcha.error .validation
+{
+  display: block;
+}
+
+.g-recaptcha
+{
+  display: inline-block;
+}
+
+.login-button
+{
+  padding: 12px;
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  background: #23a6ff;
+  cursor: pointer;
+  transition: background-color 150ms ease-in-out;
+}
+
+.login-button:hover
+{
+  background: #1f93e0;
+}
+
+.bottom-message
+{
+  color: #aaaaaa;
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 48px;
+}

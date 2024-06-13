@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/main_page.css' %}">
+
+<div class="content">
+    <div class="banner">
+        <div class="banner-slider">
+            <div class="banner-element">
+                <picture>
+                    <source media="(max-width: 750px)" srcset="{% static 'assets/banners/banner1_small.png' %}">
+                    <source media="(max-width: 1000px)" srcset="{% static 'assets/banners/banner1_medium.png' %}">
+                    <source media="(max-width: 1350px)" srcset="{% static 'assets/banners/banner1_large.png' %}">
+                    <img class="banner-image" src="{% static 'assets/banners/banner1_extralarge.png' %}" alt="RTX 4080 SUPER">
+                </picture>
+            </div>
+            <div class="banner-element">
+                <picture>
+                    <source media="(max-width: 750px)" srcset="{% static 'assets/banners/banner2_small.png' %}">
+                    <source media="(max-width: 1000px)" srcset="{% static 'assets/banners/banner2_medium.png' %}">
+                    <source media="(max-width: 1350px)" srcset="{% static 'assets/banners/banner2_large.png' %}">
+                    <img class="banner-image" src="{% static 'assets/banners/banner2_extralarge.png' %}" alt="SAMSUNG S24">
+                </picture>
+            </div>
+            <div class="banner-element">
+                <picture>
+                    <source media="(max-width: 750px)" srcset="{% static 'assets/banners/banner3_small.png' %}">
+                    <source media="(max-width: 1000px)" srcset="{% static 'assets/banners/banner3_medium.png' %}">
+                    <source media="(max-width: 1350px)" srcset="{% static 'assets/banners/banner3_large.png' %}">
+                    <img class="banner-image" src="{% static 'assets/banners/banner3_extralarge.png' %}" alt="ROG STRIX SCAR 18">
+                </picture>
+            </div>
+        </div>
+        <div class="banner-buttons">
+            <button class="slide-button" id="prev">&#10094;</button>
+            <button class="slide-button" id="next">&#10095;</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

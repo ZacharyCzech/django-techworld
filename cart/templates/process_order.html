@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+<div class="content">
+    <div class="checkout-page">
+        <div class="checkout">
+            <div class="checkout-content">
+                <div class="checkout-title">Potwierdź zamówienie!</div>
+
+                <div class="checkout-content">
+                    <ul>
+                        {% for product in cart_products %}
+                            <li>
+                                {{ product.subcategory }} >
+                                    <span class="checkout-product-name"> {{ product.name }} </span>
+
+                                {% for key, value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                        - {{ value }} *
+                                    {% endif %}
+                                {% endfor %}
+
+                                {{ product.price|floatformat:2|intcomma }} zł
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="total"> Razem: {{ totals|floatformat:2|intcomma }} zł </div>
+
+                <div class="button-box">
+                    <a class="edit-button" href="{% url 'cart_summary' %}"> Wróć do koszyka </a>
+
+                    <form method="POST" action="{% url 'process_order' %}">
+                        {% csrf_token %}
+                        <button class="order-button" type="submit"> Złóż zamówienie </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
